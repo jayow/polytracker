@@ -53,6 +53,8 @@ function diffPositions(oldPositions, newPositions) {
         size: pos.size || 0,
         sizeDelta: pos.size || 0,
         cashPnl: pos.cashPnl || null,
+        curPrice: pos.curPrice || 0,
+        avgPrice: pos.avgPrice || 0,
         eventSlug: pos.eventSlug || '',
       })
     }
@@ -70,6 +72,8 @@ function diffPositions(oldPositions, newPositions) {
         sizeDelta: -(pos.size || 0),
         prevSize: pos.size || 0,
         cashPnl: pos.cashPnl || null,
+        curPrice: pos.curPrice || 0,
+        avgPrice: pos.avgPrice || 0,
         eventSlug: pos.eventSlug || '',
       })
     }
@@ -93,6 +97,8 @@ function diffPositions(oldPositions, newPositions) {
           prevSize: oldSize,
           sizeDelta: newSize - oldSize,
           cashPnl: newPos.cashPnl || null,
+          curPrice: newPos.curPrice || 0,
+          avgPrice: newPos.avgPrice || 0,
           eventSlug: newPos.eventSlug || '',
         })
       }
@@ -122,6 +128,8 @@ async function pollOnce(config, state, conditionIds) {
           outcome: p.outcome,
           size: p.size || 0,
           cashPnl: p.cashPnl || 0,
+          curPrice: p.curPrice || 0,
+          avgPrice: p.avgPrice || 0,
           title: p.title || p.slug || '',
           slug: p.slug || '',
           eventSlug: p.eventSlug || '',
@@ -204,6 +212,7 @@ async function main() {
           .map(p => ({
             conditionId: p.conditionId, outcomeIndex: p.outcomeIndex, outcome: p.outcome,
             size: p.size || 0, cashPnl: p.cashPnl || 0,
+            curPrice: p.curPrice || 0, avgPrice: p.avgPrice || 0,
             title: p.title || p.slug || '', slug: p.slug || '', eventSlug: p.eventSlug || '',
           }))
       } catch {}

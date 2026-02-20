@@ -40,6 +40,10 @@ export function buildTradeEmbed(traderName, traderWallet, changes) {
     const marketUrl = c.eventSlug ? `https://polymarket.com/event/${c.eventSlug}` : null
     const marketLink = marketUrl ? `[${c.title || 'Unknown'}](${marketUrl})` : (c.title || 'Unknown')
 
+    const priceInfo = c.curPrice ? `**Price:** $${c.curPrice.toFixed(3)}` : null
+    const avgPriceInfo = c.avgPrice ? `**Avg Entry:** $${c.avgPrice.toFixed(3)}` : null
+    const estValue = c.curPrice && c.size ? `**Est Value:** $${(c.curPrice * c.size).toFixed(2)}` : null
+
     return {
       name: `${dir.emoji} ${dir.label} — ${c.outcome || 'Position'}`,
       value: [
@@ -49,6 +53,8 @@ export function buildTradeEmbed(traderName, traderWallet, changes) {
           : c.type === 'closed'
           ? `**Sold:** ${Math.abs(c.sizeDelta).toFixed(2)} shares`
           : `**Change:** ${sizeChange} shares | **Total:** ${c.size.toFixed(2)}`,
+        priceInfo && avgPriceInfo ? `${priceInfo} | ${avgPriceInfo}` : priceInfo || avgPriceInfo || null,
+        estValue,
         c.cashPnl != null ? `**PNL:** $${c.cashPnl.toFixed(2)}` : null,
       ].filter(Boolean).join('\n'),
       inline: false,
