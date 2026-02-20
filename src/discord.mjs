@@ -45,10 +45,10 @@ export function buildTradeEmbed(traderName, traderWallet, changes) {
       value: [
         `**Market:** ${marketLink}`,
         c.type === 'new'
-          ? `**Size:** ${c.size.toFixed(2)} shares`
+          ? `**Shares:** ${c.size.toFixed(2)}`
           : c.type === 'closed'
-          ? `**Closed position** (was ${Math.abs(c.sizeDelta).toFixed(2)} shares)`
-          : `**Size:** ${c.prevSize.toFixed(2)} → ${c.size.toFixed(2)} (${sizeChange})`,
+          ? `**Sold:** ${Math.abs(c.sizeDelta).toFixed(2)} shares`
+          : `**Change:** ${sizeChange} shares | **Total:** ${c.size.toFixed(2)}`,
         c.cashPnl != null ? `**PNL:** $${c.cashPnl.toFixed(2)}` : null,
       ].filter(Boolean).join('\n'),
       inline: false,
