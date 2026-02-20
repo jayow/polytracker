@@ -4,6 +4,7 @@
   "description": "Monitor top Polymarket traders and get Discord alerts on their moves",
   "type": "module",
   "scripts": {
+    "start": "node src/monitor.mjs",
     "discover": "node src/discover.mjs",
     "monitor": "node src/monitor.mjs",
     "test-webhook": "node src/test-webhook.mjs"

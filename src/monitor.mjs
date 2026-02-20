@@ -98,7 +98,8 @@ function diffPositions(oldPositions, newPositions) {
 }
 
 async function pollOnce(config, state) {
-  const { traders, discordWebhookUrl } = config
+  const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL || config.discordWebhookUrl
+  const { traders } = config
 
   for (const trader of traders) {
     const displayName = trader.name || shortenAddress(trader.wallet)
@@ -155,8 +156,9 @@ async function main() {
     process.exit(1)
   }
 
-  if (!config.discordWebhookUrl) {
-    console.warn('⚠ No Discord webhook URL in config.json — alerts will only show in console')
+  const webhookUrl = process.env.DISCORD_WEBHOOK_URL || config.discordWebhookUrl
+  if (!webhookUrl) {
+    console.warn('⚠ No Discord webhook URL configured — alerts will only show in console')
   }
 
   const intervalSec = config.pollIntervalSeconds || 5
@@ -167,7 +169,7 @@ async function main() {
   console.log(`  Tag: ${config.tag}`)
   console.log(`  Tracking: ${config.traders.length} traders`)
   console.log(`  Poll interval: ${intervalSec}s`)
-  console.log(`  Discord: ${config.discordWebhookUrl ? 'configured' : 'not configured'}`)
+  console.log(`  Discord: ${webhookUrl ? 'configured' : 'not configured'}`)
   console.log(`  State: ${isFirstRun ? 'first run — building baseline' : 'resuming from saved state'}`)
   console.log(`\nMonitoring... (Ctrl+C to stop)\n`)
 
