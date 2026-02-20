@@ -1,0 +1,12 @@
+{
+  "name": "polytracker",
+  "version": "1.0.0",
+  "description": "Monitor top Polymarket traders and get Discord alerts on their moves",
+  "type": "module",
+  "scripts": {
+    "discover": "node src/discover.mjs",
+    "monitor": "node src/monitor.mjs",
+    "test-webhook": "node src/test-webhook.mjs"
+  },
+  "dependencies": {}
+}

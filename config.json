@@ -1,0 +1,92 @@
+{
+  "discordWebhookUrl": "https://discord.com/api/webhooks/1459127249902243967/IhaPmsl0b9rRKXgVrQV2eeAMgZOn-0v4e7tNNS3HyWO3J9Pp2kfzYFvinB80EoedEPc0",
+  "pollIntervalSeconds": 5,
+  "tag": "Pre-Market + Up or Down",
+  "topTradersCount": 10,
+  "traders": [
+    {
+      "name": "tomsir",
+      "wallet": "0x630519aed8ebc5e0e08a95f4e83b0ae541c09d0b",
+      "tag": "Pre-Market",
+      "categoryPnl": 49076.973
+    },
+    {
+      "name": "maxdawg",
+      "wallet": "0xc9f9a7610efa67b8614c3152f50af2bd9db6c5e8",
+      "tag": "Pre-Market",
+      "categoryPnl": 39058.87
+    },
+    {
+      "name": "SchrodingerBet",
+      "wallet": "0x5a1cd342c117a4edb1e283a306ccfd60a3d4970a",
+      "tag": "Pre-Market",
+      "categoryPnl": 37704.09
+    },
+    {
+      "name": "tryingmyluckhere",
+      "wallet": "0xac9b386454ed02ef205e0ebd189d8864fd02d4c5",
+      "tag": "Pre-Market",
+      "categoryPnl": 22596.82
+    },
+    {
+      "name": "NeverYES",
+      "wallet": "0xe55108581aec68af7686bd4cbc4f53ef93680a67",
+      "tag": "Pre-Market",
+      "categoryPnl": 20059.62
+    },
+    {
+      "name": "johnmcginn",
+      "wallet": "0xa3e9a711841e655def080044768452b60f4263d0",
+      "tag": "Pre-Market",
+      "categoryPnl": 19744.65
+    },
+    {
+      "name": "fwed33",
+      "wallet": "0x14619de097b1fbe058d6d36282662c20958a30a1",
+      "tag": "Pre-Market",
+      "categoryPnl": 14116.33
+    },
+    {
+      "name": "X10DED",
+      "wallet": "0x23d01f0a0fc16ae248a905345edd675cffbc8108",
+      "tag": "Pre-Market",
+      "categoryPnl": 12326.76
+    },
+    {
+      "name": "madril",
+      "wallet": "0x34026514e0bda25f0f9fbb053fe3070cdc8c9446",
+      "tag": "Pre-Market",
+      "categoryPnl": 12054.53
+    },
+    {
+      "name": "gydmasg",
+      "wallet": "0xc4567fe2a835b23f40db07f567ba0efbbdc98996",
+      "tag": "Pre-Market",
+      "categoryPnl": 10584.92
+    },
+    {
+      "name": "ttt-1344",
+      "wallet": "0xd938e7555677c08dd9cacfb20436f9ec10750481",
+      "tag": "Up or Down",
+      "categoryPnl": 594.56
+    },
+    {
+      "name": "Imorpheus",
+      "wallet": "0x93b110ff31deb58847e841b3cbc6535b3e7b746e",
+      "tag": "Up or Down",
+      "categoryPnl": 322.70
+    },
+    {
+      "name": "Manchini",
+      "wallet": "0xa223bb4039818c64e2164d4005c17c8d346cb03b",
+      "tag": "Up or Down",
+      "categoryPnl": 212.50
+    },
+    {
+      "name": "lastchancetosurvive",
+      "wallet": "0xdbbcae312197f548fd4d1b3a12acfe54ecd7ef69",
+      "tag": "Up or Down",
+      "categoryPnl": 83.86
+    }
+  ]
+}
