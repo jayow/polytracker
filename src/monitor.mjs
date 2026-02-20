@@ -2,7 +2,7 @@
 // Monitor tracked traders' positions and alert on changes via Discord
 // Usage: npm run monitor
 
-import { readFileSync, writeFileSync, existsSync } from 'fs'
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { fetchPositions, shortenAddress, sleep } from './api.mjs'
@@ -22,6 +22,8 @@ function loadState() {
 }
 
 function saveState(state) {
+  const dir = join(ROOT, 'data')
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true })
   writeFileSync(STATE_PATH, JSON.stringify(state, null, 2))
 }
 
