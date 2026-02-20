@@ -5,7 +5,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
-import { fetchPositions, shortenAddress, sleep } from './api.mjs'
+import { fetchAllEvents, filterEventsByTag, extractMarkets, fetchPositions, shortenAddress, sleep } from './api.mjs'
 import { sendDiscordMessage, buildTradeEmbed } from './discord.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -102,7 +102,7 @@ function diffPositions(oldPositions, newPositions) {
   return changes
 }
 
-async function pollOnce(config, state) {
+async function pollOnce(config, state, conditionIds) {
   const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL || config.discordWebhookUrl
   const { traders } = config
 
@@ -113,17 +113,19 @@ async function pollOnce(config, state) {
       const positions = await fetchPositions(trader.wallet)
       if (!Array.isArray(positions)) continue
 
-      // Normalize positions for comparison
-      const normalized = positions.map(p => ({
-        conditionId: p.conditionId,
-        outcomeIndex: p.outcomeIndex,
-        outcome: p.outcome,
-        size: p.size || 0,
-        cashPnl: p.cashPnl || 0,
-        title: p.title || p.slug || '',
-        slug: p.slug || '',
-        eventSlug: p.eventSlug || '',
-      }))
+      // Normalize and filter to only tag-specific positions
+      const normalized = positions
+        .filter(p => !conditionIds || conditionIds.has(p.conditionId))
+        .map(p => ({
+          conditionId: p.conditionId,
+          outcomeIndex: p.outcomeIndex,
+          outcome: p.outcome,
+          size: p.size || 0,
+          cashPnl: p.cashPnl || 0,
+          title: p.title || p.slug || '',
+          slug: p.slug || '',
+          eventSlug: p.eventSlug || '',
+        }))
 
       const prevPositions = state[trader.wallet] || []
       const changes = diffPositions(prevPositions, normalized)
@@ -168,11 +170,22 @@ async function main() {
   }
 
   const intervalSec = config.pollIntervalSeconds || 5
+  const tag = config.tag || 'Pre-Market'
+
+  // Fetch conditionIds for the tag to filter positions
+  console.log(`\nFetching "${tag}" markets for position filtering...`)
+  const allEvents = await fetchAllEvents()
+  const taggedEvents = filterEventsByTag(allEvents, tag)
+  const markets = extractMarkets(taggedEvents)
+  const conditionIds = new Set(markets.map(m => m.conditionId).filter(Boolean))
+  console.log(`  Found ${conditionIds.size} "${tag}" markets to filter by`)
+
   const state = loadState()
   const isFirstRun = Object.keys(state).length === 0
 
   console.log(`\n=== PolyTracker Monitor ===`)
-  console.log(`  Tag: ${config.tag}`)
+  console.log(`  Tag: ${tag}`)
+  console.log(`  Markets: ${conditionIds.size}`)
   console.log(`  Tracking: ${config.traders.length} traders`)
   console.log(`  Poll interval: ${intervalSec}s`)
   console.log(`  Discord: ${webhookUrl ? 'configured' : 'not configured'}`)
@@ -184,14 +197,14 @@ async function main() {
     console.log('Building initial state (no alerts for existing positions)...')
     // Temporarily disable webhook for first run
     const tempConfig = { ...config, discordWebhookUrl: '' }
-    await pollOnce(tempConfig, state)
+    await pollOnce(tempConfig, state, conditionIds)
     console.log(`Baseline captured: ${Object.keys(state).length} traders\n`)
     console.log('Now monitoring for changes...\n')
   }
 
   // Continuous polling loop
   while (true) {
-    await pollOnce(config, state)
+    await pollOnce(config, state, conditionIds)
     await sleep(intervalSec * 1000)
   }
 }
