@@ -192,14 +192,25 @@ async function main() {
   console.log(`  State: ${isFirstRun ? 'first run — building baseline' : 'resuming from saved state'}`)
   console.log(`\nMonitoring... (Ctrl+C to stop)\n`)
 
-  // First poll — build baseline state (don't alert on first run)
+  // First poll — silently build baseline state
   if (isFirstRun) {
-    console.log('Building initial state (no alerts for existing positions)...')
-    // Temporarily disable webhook for first run
-    const tempConfig = { ...config, discordWebhookUrl: '' }
-    await pollOnce(tempConfig, state, conditionIds)
-    console.log(`Baseline captured: ${Object.keys(state).length} traders\n`)
-    console.log('Now monitoring for changes...\n')
+    console.log('Building initial baseline (silent)...')
+    for (const trader of config.traders) {
+      try {
+        const positions = await fetchPositions(trader.wallet)
+        if (!Array.isArray(positions)) continue
+        state[trader.wallet] = positions
+          .filter(p => conditionIds.has(p.conditionId))
+          .map(p => ({
+            conditionId: p.conditionId, outcomeIndex: p.outcomeIndex, outcome: p.outcome,
+            size: p.size || 0, cashPnl: p.cashPnl || 0,
+            title: p.title || p.slug || '', slug: p.slug || '', eventSlug: p.eventSlug || '',
+          }))
+      } catch {}
+      await sleep(500)
+    }
+    saveState(state)
+    console.log(`Baseline captured: ${Object.keys(state).length} traders — now monitoring\n`)
   }
 
   // Continuous polling loop
