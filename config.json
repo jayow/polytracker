@@ -1,7 +1,7 @@
 {
-  "discordWebhookUrl": "https://discord.com/api/webhooks/1459127249902243967/IhaPmsl0b9rRKXgVrQV2eeAMgZOn-0v4e7tNNS3HyWO3J9Pp2kfzYFvinB80EoedEPc0",
+  "discordWebhookUrl": "",
   "pollIntervalSeconds": 5,
-  "tag": "Pre-Market + Up or Down",
+  "tag": "Pre-Market",
   "topTradersCount": 10,
   "traders": [
     {
@@ -63,30 +63,6 @@
       "wallet": "0xc4567fe2a835b23f40db07f567ba0efbbdc98996",
       "tag": "Pre-Market",
       "categoryPnl": 10584.92
-    },
-    {
-      "name": "ttt-1344",
-      "wallet": "0xd938e7555677c08dd9cacfb20436f9ec10750481",
-      "tag": "Up or Down",
-      "categoryPnl": 594.56
-    },
-    {
-      "name": "Imorpheus",
-      "wallet": "0x93b110ff31deb58847e841b3cbc6535b3e7b746e",
-      "tag": "Up or Down",
-      "categoryPnl": 322.70
-    },
-    {
-      "name": "Manchini",
-      "wallet": "0xa223bb4039818c64e2164d4005c17c8d346cb03b",
-      "tag": "Up or Down",
-      "categoryPnl": 212.50
-    },
-    {
-      "name": "lastchancetosurvive",
-      "wallet": "0xdbbcae312197f548fd4d1b3a12acfe54ecd7ef69",
-      "tag": "Up or Down",
-      "categoryPnl": 83.86
     }
   ]
 }

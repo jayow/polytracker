@@ -53,6 +53,7 @@ function diffPositions(oldPositions, newPositions) {
         size: pos.size || 0,
         sizeDelta: pos.size || 0,
         cashPnl: pos.cashPnl || null,
+        eventSlug: pos.eventSlug || '',
       })
     }
   }
@@ -69,6 +70,7 @@ function diffPositions(oldPositions, newPositions) {
         sizeDelta: -(pos.size || 0),
         prevSize: pos.size || 0,
         cashPnl: pos.cashPnl || null,
+        eventSlug: pos.eventSlug || '',
       })
     }
   }
@@ -91,6 +93,7 @@ function diffPositions(oldPositions, newPositions) {
           prevSize: oldSize,
           sizeDelta: newSize - oldSize,
           cashPnl: newPos.cashPnl || null,
+          eventSlug: newPos.eventSlug || '',
         })
       }
     }
@@ -119,6 +122,7 @@ async function pollOnce(config, state) {
         cashPnl: p.cashPnl || 0,
         title: p.title || p.slug || '',
         slug: p.slug || '',
+        eventSlug: p.eventSlug || '',
       }))
 
       const prevPositions = state[trader.wallet] || []
@@ -132,7 +136,7 @@ async function pollOnce(config, state) {
         }
 
         // Send Discord alert
-        const embed = buildTradeEmbed(displayName, changes)
+        const embed = buildTradeEmbed(displayName, trader.wallet, changes)
         await sendDiscordMessage(discordWebhookUrl, embed)
       }
 
